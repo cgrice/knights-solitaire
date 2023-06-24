@@ -171,11 +171,46 @@ button:hover {
 
 @media only screen and (max-width: 1080px) {
   .app {
-    flex-direction: column;
+    flex-direction: row;
   }
 
   .intro {
-    width: 700px;
+    width: 300px;
+  }
+
+  .game {
+    width: 80vh;
+    height: 80vh;
+  }
+
+  .board {
+    width: 100%;
+    height: 100%;
+    grid-template-columns: repeat(5, 20%);
+    grid-template-rows: repeat(5, 20%);
+    grid-gap: 0px;
+    background-image: url('./frame.png');
+    padding: 0;
+    margin: 0;
+    background-size: 80vh 80vh;
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+
+  .space {
+    width: 99%;
+    height: 98%;
+    border-radius: 5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid transparent;
+  }
+
+  .marble {
+    width: 40%;
+    height: 40%;
+    border-radius: 50%;
   }
 }
 
