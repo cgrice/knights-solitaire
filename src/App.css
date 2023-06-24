@@ -1,38 +1,228 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+body {
+  background-color: #333;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+}
+
+.app {
+  display: flex;
+}
+
+.intro {
+  margin-top: 40px;
+  width: 300px;
+  margin-right: 20px;
+}
+
+h1 { 
+  margin: 0;
+  padding: 0;
+}
+
+.board {
+  position: relative;
+  background-color: #333;
+  display: grid;
+  grid-template-columns: repeat(5, 140px);
+  grid-template-rows: repeat(5, 138px);
+  grid-gap: 0px;
+  background-image: url('./frame.png');
+  width: 700px;
+  height: 700px;
+  padding: 20px;
+  margin-top: 40px;
+}
+
+.space {
+  width: 140px;
+  height: 138px;
+  border-radius: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid transparent;
+}
+
+.space:hover .marble {
+  /* opacity: 0.8; */
+  cursor: pointer;
+}
+
+.moves {
+  width: 100%;
+  color: #ccc;
+  text-align: center;
+  font-size: 2em;
+  margin: 20px;
+}
+
+.space:hover .marble.empty {
+  cursor: default;
+} 
+
+.space.valid:hover {
+  /* background-color: rgba(255, 255, 255, 0.2); */
+}
+
+.space.invalid:hover {
+  /* background-color: rgba(50, 50, 50, 0.3); */
+}
+
+.marble {
+  width: 50px;
+  height: 50px;
+  border-radius:25px;
+}
+
+.marble.red {
+  background: rgb(238,9,20);
+  background: linear-gradient(90deg, rgba(238,9,20,1) 0%, rgba(245,11,11,1) 35%, rgba(159,25,121,1) 100%);
+  filter: drop-shadow(5px 5px 10px #000);
+}
+
+.space.invalid:hover .marble {
+  filter: drop-shadow(5px 5px 10px rgba(255, 50, 50, 0.4));
+}
+
+.space.valid:hover .marble {
+  filter: drop-shadow(5px 5px 10px rgba(50, 255, 50, 0.4));
+}
+
+.marble.blue {
+  background: rgb(9,112,238);
+  background: linear-gradient(90deg, rgba(9,112,238,1) 0%, rgba(11,80,245,1) 35%, rgba(28,217,213,1) 100%);
+  filter: drop-shadow(5px 5px 10px #000);
+}
+
+.marble.empty {
+  box-shadow: inset -9px -3px 6px #ccc;
+  background-color: #333;
+  opacity: 0.4;
+}
+
+.won {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  background-color: rgba(0, 0, 0, 0.6);
+  width: 100%;
+  height: 100%;
+  color: white;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.intro { 
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.won h1 {
+  font-size: 4em;
+  margin: 15px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.won p {
+  font-size: 2em;
+  margin: 10px;
+}
+
+button {
+  background-color: rgba(14, 141, 14, 1);
+  font-size: 0.8em;
+  padding: 8px 10px;
+  margin: 0px 10px;
+  color: white;
+  outline: none;
+  border: none;
+  border-radius: 4px;
+}
+
+button:hover {
+  cursor: pointer;
+  background-color: rgba(14, 200, 14, 1);
+}
+
+.won button {
+  margin: 20px;
+  padding: 20px 40px;
+  font-size: 1.5em;
+}
+
+.moves button {
+  margin-left: 30px;
+}
+
+.marble.moved {
+  animation: wobble 0.5s ease 1;
+  position: relative;
+}
+
+@keyframes wobble {
+  0% { left: 0px; top: 1px; }
+  25% { left: 3px; top: 0px; }
+  50% { left: -2px; top: -1px; }
+  75% { left: 1px; top: 0px; }
+  100% { left: 0px }
+ }
+
+@media only screen and (max-width: 1080px) {
+  .app {
+    flex-direction: column;
   }
-  to {
-    transform: rotate(360deg);
+
+  .intro {
+    width: 700px;
+  }
+}
+
+@media only screen and (max-width: 770px) {
+  .app {
+    flex-direction: column;
+  }
+
+  .intro {
+    width: 90vw;
+    margin: 0;
+    margin-top: 20px;
+    /* display: none; */
+  }
+
+  .game {
+    width: 90vw;
+    height: 90vw;
+  }
+
+  .board {
+    width: 100%;
+    height: 100%;
+    grid-template-columns: repeat(5, 20%);
+    grid-template-rows: repeat(5, 20%);
+    grid-gap: 0px;
+    background-image: url('./frame.png');
+    padding: 0;
+    margin: 0;
+    background-size: 90vw 90vw;
+    margin-top: 20px;
+    margin-bottom: 40px;
+  }
+
+  .space {
+    width: 99%;
+    height: 98%;
+    border-radius: 5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid transparent;
+  }
+
+  .marble {
+    width: 40%;
+    height: 40%;
+    border-radius: 50%;
   }
 }
