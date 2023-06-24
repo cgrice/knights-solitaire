@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 
 const { createBoard } = require("./lib/Board")
 
@@ -9,10 +9,8 @@ const Board = () => {
     const [rotations, setRotations] = useState(null)
     const [moves, setMoves] = useState([])
     const [winning, setWinning] = useState(false)
+    const [muted, setMuted] = useState(false)
 
-    let audio = new Audio("/marble.m4a")
-    
-    
     useEffect(() => {
         const b = createBoard()
         setBoard(b)
@@ -30,17 +28,23 @@ const Board = () => {
         setRotations(marbleRotations)
     }, [])
 
+    const playAudio = useCallback((audio) => {
+        if (!muted) {
+            audio.play()
+        }
+    }, [muted])
+
     useEffect(() => {
         if(board) {
             if(board.won()) {
                 let win = new Audio("/win.wav")
-                win.play()
+                playAudio(win)
                 setWinning(true)
             }
         }
 
 
-    }, [moves, board])
+    }, [moves, board, playAudio])
     
     const getColour = (x, y) => {
         const type = board.get(x, y)
@@ -76,7 +80,8 @@ const Board = () => {
         const moved = board.move([x, y], empty)
 
         if(moved) {
-            audio.play()
+            let marble = new Audio("/marble.m4a")
+            playAudio(marble)
             setMoves([...moves, [ [x,y], empty ]])
             setEmpty([x, y])
             setBoard(board)
@@ -100,6 +105,10 @@ const Board = () => {
         const b = createBoard()
         setBoard(b)
         setEmpty([2, 2])
+    }
+
+    const toggleMute = () => {
+        setMuted(!muted)
     }
 
     const winningMessage = () => {
@@ -156,8 +165,9 @@ const Board = () => {
                     ))}
                 </div>
                 <div className="moves">
-                    {moves.length} Moves
+                    <span>{moves.length} Moves</span>
                     <button onClick={undo}>Undo</button>
+                    <div className="mute" onClick={toggleMute}>{muted ? '🔇' : '🔊'}</div>
                 </div>
             </div>
         </div>

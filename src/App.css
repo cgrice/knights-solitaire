@@ -50,11 +50,11 @@ h1 {
 }
 
 .moves {
-  width: 100%;
+  display: flex;
   color: #ccc;
   text-align: center;
   font-size: 2em;
-  margin: 20px;
+  margin: 20px 0px;
 }
 
 .space:hover .marble.empty {
@@ -159,6 +159,16 @@ button:hover {
 .marble.moved {
   animation: wobble 0.5s ease 1;
   position: relative;
+}
+
+.mute {
+  width: 50px;
+  display: inline-block;
+  margin-left: auto;
+}
+
+.mute:hover {
+  cursor: pointer;
 }
 
 @keyframes wobble {
